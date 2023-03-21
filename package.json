@@ -1,0 +1,25 @@
+{
+  "name": "wt.cw2.00012938",
+  "version": "1.0.0",
+  "description": "Repository for coursework project 2 of Web Technology module. Student ID: 00012938",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiut00012938/WT.CW2.00012938.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wiut00012938/WT.CW2.00012938/issues"
+  },
+  "homepage": "https://github.com/wiut00012938/WT.CW2.00012938#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "install": "^0.13.0",
+    "nodemon": "^2.0.21",
+    "pug": "^3.0.2"
+  }
+}
