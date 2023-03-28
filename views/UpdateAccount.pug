@@ -1,0 +1,23 @@
+extends layout.pug 
+
+block content 
+    div.update-account-form
+        h1 Update the information of your account
+        form#form.form(action="/sign-up", method="POST")
+            label Name
+            span#name-error
+            input#name.input(type="text", name="name" value = `${account.Name}`)
+
+            label Surname
+            span#surname-error
+            input#surname.input(type="text", name="surname" value = `${account.Surname}`)   
+
+            label Email
+            span#email-error
+            input#email.input(type="email", name="email" value = `${account.Email}`)   
+            
+            label Desired limit of expenduture per month in $
+            span#limit-error
+            input#limit.input(type="number", name ="limit" value = `${account.Limit}`)
+
+            button.input Submit  

@@ -1,0 +1,21 @@
+extends layout.pug 
+
+block content 
+    div.new-income-form
+        h1 Add a new spending
+        form#form.form(action="/new_income", method="POST")
+            label Category
+            span#category-error
+            if categories
+            select.input(name = "category")
+                each category in categories
+                    option.input(value = category.value)= category.title
+            
+            label Amount($)
+            span#amount-error
+            input#limit.input(type="number", name ="limit")
+
+            label Details
+            textarea.input(name="details", cols="30", rows="10") 
+
+            button.input Submit  

@@ -114,14 +114,14 @@ p.success{
 
 
 
-.signup-form {
+.signup-form,.new-expense-form, .new-income-form,.update-account-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 5rem 0;
   }
   
-  .signup-form h1 {
+  .signup-form h1 ,.new-expense-form h1, .new-income-form h1,.update-account-form h1{
     color: tomato;
     font-size: 3rem;
     margin-bottom: 20px;
@@ -143,13 +143,16 @@ p.success{
     margin-bottom: 10px;
   }
   
-  input {
+  input, select,textarea{
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: none;
     border-radius: 5px;
-    font-size: 3rem;
+    font-size: 2rem;
+  }
+  option{
+    font-size: 2rem;
   }
 #name-error , #surname-error, #email-error, #limit-error{
     text-align: center;
