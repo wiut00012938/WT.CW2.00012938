@@ -1,0 +1,23 @@
+extends layout.pug
+
+block content
+    if success
+            p.success Note is created!
+    .personal-info
+        h1 USER INFORMATION
+        .sub-item
+            h2 Name
+            p Abdulaziz
+        .sub-item
+            h2 Surname
+            p Dusbabaev
+        .sub-item
+            h2 Email
+            p abdulazizdusbabaev@gmail.com
+        .sub-item
+            h2 Date of registration
+            p 27.03.2023
+        .sub-item 
+            h2 Desired limit of expenduture per month
+            p $300
+        a.update(href='account/update') Update an information

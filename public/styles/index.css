@@ -6,14 +6,18 @@
     font-size: 10px;
     color: rgb(8, 7, 7);
 }
-header{
+html{
+    max-width: 110rem;
+    margin: 0 auto;
+}
+header,footer{
     width: 100%;
     padding-bottom: 1rem;
     border-bottom: 1px solid black;
     background-color: rgb(63, 150, 231);
 }
-header h1{
-    font-size: 5rem;
+h1{
+    font-size: 3rem;
     text-align: center;
     color: white;
 }
@@ -30,12 +34,19 @@ nav{
     justify-content: space-around;
     align-items: center;
 }
-a,i{
+
+a{
+    text-align: center;
     text-decoration: none;
     font-size: 3rem;
 }
+.user-logo,i{
+    padding: 4px;
+}
+
 a:hover,i:hover{
-    border: 1px  solid rgb(218, 56, 44);
+    background-color: tomato;
+    color: white;
     transition: 0.4s;
     cursor: pointer;
 }
@@ -43,27 +54,100 @@ a:hover,i:hover{
     margin-top: 1rem;
     width: 300px;
 }
-footer{
-    display: flex;
-    justify-content: space-around;
-    -webkit-box-shadow: 0px -8px 8px 0px rgba(34, 60, 80, 0.2);
-    -moz-box-shadow: 0px -8px 8px 0px rgba(34, 60, 80, 0.2);
-    box-shadow: 0px -8px 8px 0px rgba(34, 60, 80, 0.2);
+footer p{
+    font-size: 2rem;
+    text-align: center;
+    color: white;
 }
-.quick_links{
+
+
+
+
+
+
+.personal-info h1{
+    margin: 2rem 0;
+    color: black;
+    border-bottom: 1px solid tomato;
+}
+.sub-item{
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem 0;
+}
+.sub-item h2{
+    font-size: 2rem;
+}
+.sub-item p{
+    font-size: 2rem;
+    color: rgb(63, 150, 231);
+}
+a.update ,button{
+    display: inline-block;
+    font-size: 2rem;
+  background-color: rgb(63, 150, 231);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+a.update{
+  margin: 2rem 0 2rem 40%;
+}
+a.update:hover,button:hover{
+    background-color: tomato;
+    transition: 0.4s;
+}
+p.success{
+    display: inline-block;
+    padding: 10px;
+    border: 1 px solid green;
+    font-size: 3rem;
+    color:green;
+}
+
+
+
+
+
+
+
+
+.signup-form {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid rgb(194, 39, 18);
-    padding: 0 2rem;
-}
-#warning{
-    width: 30%;
-    flex-wrap: nowrap;
-    border-right: 1px solid rgb(194, 39, 18);
-}
-#warning p{
+    align-items: center;
+    margin: 5rem 0;
+  }
+  
+  .signup-form h1 {
+    color: tomato;
     font-size: 3rem;
-}
-.sample{
-    height: 1000px;
-}
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  label {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 3rem;
+  }

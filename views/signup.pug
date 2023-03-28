@@ -1,0 +1,19 @@
+extends layout.pug 
+
+block content 
+    div.signup-form
+        h1 Welcome to the expenduture tracker software! Please, sign up for further work
+        form.form(action="/sign-up", method="POST")
+            label Name
+            input.input(type="text", name="name")
+
+            label Surname
+            input.input(type="text", name="surname")   
+
+            label Email
+            input.input(type="email", name="email")   
+            
+            label Desired limit of expenduture per month in $
+            input.input(type="number", name ="limit")
+
+            button.input Submit  
