@@ -151,3 +151,11 @@ p.success{
     border-radius: 5px;
     font-size: 3rem;
   }
+#name-error , #surname-error, #email-error, #limit-error{
+    text-align: center;
+    font-size: 2rem;
+    color: red;
+}
+.error{
+    border: 1px solid red;
+}

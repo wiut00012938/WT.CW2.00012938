@@ -7,17 +7,17 @@ block content
         h1 USER INFORMATION
         .sub-item
             h2 Name
-            p Abdulaziz
+            p #{account.Name}
         .sub-item
             h2 Surname
-            p Dusbabaev
+            p #{account.Surname}
         .sub-item
             h2 Email
-            p abdulazizdusbabaev@gmail.com
+            p #{account.Email}
         .sub-item
             h2 Date of registration
-            p 27.03.2023
+            p #{account.RegisterDate}
         .sub-item 
             h2 Desired limit of expenduture per month
-            p $300
+            p $ #{account.Limit}
         a.update(href='account/update') Update an information
