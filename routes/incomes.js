@@ -23,38 +23,49 @@ router.post('/new_income',(req,res)=>{
     const formData = req.body
     Category = formData.category
     let icon = ""
-            if(Category == 0){
-                icon = "coins"
-            }
-            else if(Category == 1){
-                icon = "piggy-bank"
-            }
-            else if (Category == 2){
-                icon = "hand-holding-dollar"
-            }
-            else{
-                icon = "circle-dollar-to-slot"
-            }
-        fs.readFile('./data/incomes.json',(err,data)=>{
+    if(Category == 0){
+        icon = "coins"
+    }
+    else if(Category == 1){
+        icon = "piggy-bank"
+    }
+    else if (Category == 2){
+        icon = "hand-holding-dollar"
+    }
+    else{
+        icon = "circle-dollar-to-slot"
+    }
+
+    fs.readFile('./data/balance.json',(err,data)=>{
+        if(err) throw err
+        const balance_value = JSON.parse(data)[0]
+        balance_value.Balance = parseFloat(balance_value.Balance) + parseFloat(formData.amount)
+        //balance_value.Balance = new_value.toString()
+        const updatedData = JSON.stringify(balance_value);
+        fs.writeFileSync('./data/balance.json',updatedData);
+    })
+
+
+    fs.readFile('./data/incomes.json',(err,data)=>{
+        if(err) throw err
+
+        const formattedDate = new Date().toLocaleDateString('en-GB')
+        const income_info = JSON.parse(data)
+        income_info.push({
+            id:id(),
+            Category: formData.category.title,
+            Amount: formData.amount,
+            Details: formData.details,
+            RegisterDate: formattedDate,
+            Icon: icon
+        })
+
+        fs.writeFile('./data/incomes.json',JSON.stringify(income_info),err=>{
             if(err) throw err
 
-            const formattedDate = new Date().toLocaleDateString('en-GB')
-            const income_info = JSON.parse(data)
-            income_info.push({
-                id:id(),
-                Category: formData.category.title,
-                Amount: formData.amount,
-                Details: formData.Details,
-                RegisterDate: formattedDate,
-                Icon: icon
-            })
-
-            fs.writeFile('./data/incomes.json',JSON.stringify(income_info),err=>{
-                if(err) throw err
-
-                res.redirect('/incomes?success=true');
-            })
+            res.redirect('/incomes?success=true');
         })
+    })
 })
 
 
