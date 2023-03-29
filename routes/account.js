@@ -20,5 +20,8 @@ router.get('/update',(req,res)=>{
         res.render('UpdateAccount', {account:account})
     })
 })
+router.post('/update_account',(req,res)=>{
+    
+})
 
 module.exports = router;

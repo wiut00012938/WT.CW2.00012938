@@ -3,7 +3,7 @@ extends layout.pug
 block content 
     div.update-account-form
         h1 Update the information of your account
-        form#form.form(action="/sign-up", method="POST")
+        form#form.form(action="/update_account", method="POST")
             label Name
             span#name-error
             input#name.input(type="text", name="name" value = `${account.Name}`)

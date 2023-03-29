@@ -7,9 +7,9 @@ block content
             label Category
             span#category-error
             if categories
-            select.input(name = "category")
-                each category in categories
-                    option.input(value = category.value)= category.title
+                select.input(name = "category")
+                    each category in categories
+                        option.input(value = category.value)= category.title
             
             label Amount($)
             span#amount-error
