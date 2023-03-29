@@ -1,9 +1,11 @@
 extends layout.pug 
 
 block content 
+    if error
+        p.error expenditure amount can not be less then your balance. Please recheck the amount of expenditure or add an income if you had one
     div.new-expense-form
         h1 Add a new spending
-        form#form.form(action="/new_expense", method="POST")
+        form#form.form(action="/expenditures/new_expenditure", method="POST")
             label Category
             span#category-error
             if categories
@@ -13,7 +15,7 @@ block content
             
             label Amount($)
             span#amount-error
-            input#limit.input(type="number", name ="limit")
+            input#limit.input(type="number", name ="amount")
 
             label Details
             textarea.input(name="details", cols="30", rows="10") 
