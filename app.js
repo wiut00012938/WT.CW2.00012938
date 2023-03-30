@@ -75,7 +75,8 @@ body('limit')
             fs.writeFile('./data/account.json',JSON.stringify(account_info),err=>{
                 if(err) throw err
 
-                res.redirect('/account?success=true');
+                //res.redirect('/?success=true');
+                res.json({ success: true });
             })
         })
     }

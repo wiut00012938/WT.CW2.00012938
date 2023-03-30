@@ -33,14 +33,17 @@ form.addEventListener('submit', e => {
 
         LimitError.textContent = ''
         get('limit').classList.remove('error')
-
-        data.errors.forEach(error =>{
-            get(`${error.param}-error`).textContent = `${error.msg} | you entered ${error.value ? error.value: 'nothing'}`
-            get(`${error.param}`).classList.add('error')
+        if(data.errors != null){
+            data.errors.forEach(error =>{
+                get(`${error.param}-error`).textContent = `${error.msg} | you entered ${error.value ? error.value: 'nothing'}`
+                get(`${error.param}`).classList.add('error')
         })
+    }
+    else{
+        window.location.href = '/account';
+    }
     })
 })
-
 
 function getValue(elemId) {
     return document.getElementById(elemId).value
