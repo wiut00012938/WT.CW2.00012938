@@ -38,8 +38,8 @@ router.post('/new_income',(req,res)=>{
 
     fs.readFile('./data/balance.json',(err,data)=>{
         if(err) throw err
-        const balance_value = JSON.parse(data)[0]
-        balance_value.Balance = parseFloat(balance_value.Balance) + parseFloat(formData.amount)
+        const balance_value = JSON.parse(data)
+        balance_value[0].Balance = parseFloat(balance_value[0].Balance) + parseFloat(formData.amount)
         //balance_value.Balance = new_value.toString()
         const updatedData = JSON.stringify(balance_value);
         fs.writeFileSync('./data/balance.json',updatedData);

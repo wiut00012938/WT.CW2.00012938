@@ -21,7 +21,8 @@ let categories = [
 
 router.get('/',(req,res)=>{
     const error = req.query.error || false
-    res.render('allexpenditures',{error})
+    const success = req.query.success || false
+    res.render('allexpenditures',{error,success})
 });
 
 router.get('/new_expenditure',(req,res)=>{
@@ -74,12 +75,12 @@ router.post('/new_expenditure',(req,res)=>{
 
     fs.readFile('./data/balance.json',(err,data)=>{
         if(err) throw err
-        const balance_value = JSON.parse(data)[0]
-        if(parseFloat(balance_value.Balance < parseFloat(formData.amount))){
+        const balance_value = JSON.parse(data)
+        if(parseFloat(balance_value[0].Balance < parseFloat(formData.amount))){
             res.redirect('/all_expenditures?error=true')
         }
         else{
-            balance_value.Balance = parseFloat(balance_value.Balance) - parseFloat(formData.amount)
+            balance_value[0].Balance = parseFloat(balance_value[0].Balance) - parseFloat(formData.amount)
             const updatedData = JSON.stringify(balance_value);
             fs.writeFileSync('./data/balance.json',updatedData);
         }
