@@ -20,8 +20,17 @@ let categories = [
 ]
 
 router.get('/',(req,res)=>{
-    const success = req.query.success || false
-    res.render('allexpenditures',{success})
+    fs.readFile('./data/expenditures.json',(err,data)=>{
+        if(err) throw err
+
+        const expenditures = JSON.parse(data)
+        const success = req.query.success || false
+        fs.readFile('./data/balance.json',(err,data)=>{
+            if(err) throw err
+            balance_value = JSON.parse(data)[0]
+            res.render('allexpenditures',{success,expenditures:expenditures,balance_value:balance_value})
+        })
+    })
 });
 
 router.get('/new_expenditure',(req,res)=>{

@@ -208,7 +208,11 @@ div.expenditure p,div.income p{
     margin: 2rem 0;
     border-bottom: 1px solid rgb(63, 150, 231);
 }
-
+.reverse-turner{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+}
 div.wrapper{
     border: 1px solid rgb(63, 150, 231);
     border-radius: 20px;
@@ -248,13 +252,14 @@ div.wrapper{
     margin-right: 2rem;
 }
 .info-controllers{
-    width: 30%;
+    width: 25%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
 .info-controllers a{
+    margin-left: 2rem;
     margin-bottom: 2rem;
     padding: 2rem;
     text-decoration: none;

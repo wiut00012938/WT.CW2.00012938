@@ -11,8 +11,17 @@ let categories = [
     {value:3, title: 'Others'}
 ]
 router.get('/',(req,res)=>{
-    const success = req.query.success || false
-    res.render('allincomes', { success})
+    fs.readFile('./data/incomes.json',(err,data)=>{
+        if(err) throw err
+
+        const incomes = JSON.parse(data)
+        const success = req.query.success || false
+        fs.readFile('./data/balance.json',(err,data)=>{
+            if(err) throw err
+            balance_value = JSON.parse(data)[0]
+            res.render('allincomes',{success,incomes:incomes,balance_value:balance_value})
+        })
+    })
 });
 
 

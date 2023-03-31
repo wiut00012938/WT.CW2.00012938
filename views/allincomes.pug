@@ -3,23 +3,25 @@ extends layout.pug
 block content
     if success
             p.success New Income is added!
-
+    
     div.income
-        p Current Balance : $30
+        p Current Balance : $#{balance_value.Balance}
         .options
             a(href='/expenditures/new_expenditure')#new-expense Add a new expense
             a(href='/incomes/new_income')#new-income Add a new income
         h1 All Expenditures
-        .wrapper
-            h2 Transport
-            div
-                .income-info
+        .reverse-turner
+            each income in incomes
+                .wrapper
+                    h2 #{income.Category}
                     div
-                        p Created Date: 01/01/2023
-                        p Amount: $1
-                        p Details: something something something
-                    div
-                        i.fa-solid.fa-house
-                .info-controllers
-                    a(href='/delete').info-delete delete the expenditure
-                    a(href='/update').info-update update the expenditure
+                        .income-info
+                            div
+                                p Created Date: #{income.RegisterDate}
+                                p Amount: $#{income.Amount}
+                                p Details: #{income.Details}
+                            div
+                                i.fa-solid(class=`fa-${income.Icon}`)
+                        .info-controllers
+                            a(href='/delete').info-delete delete the expenditure
+                            a(href='/update').info-update update the expenditure
