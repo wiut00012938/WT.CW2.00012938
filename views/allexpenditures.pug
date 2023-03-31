@@ -4,3 +4,24 @@ block content
     if success
             p.success New Expenditure is added!
     
+    div.expenditure
+        p Current Balance : $30
+        .options
+            a(href='/expenditures/new_expenditure')#new-expense Add a new expense
+            a(href='/incomes/new_income')#new-income Add a new income
+        h1 All Expenditures
+        .wrapper
+            h2 Transport
+            div
+                .expenditure-info
+                    div
+                        p Created Date: 01/01/2023
+                        p Amount: $1
+                        p Details: something something something
+                    div
+                        i.fa-solid.fa-house
+                .info-controllers
+                    a(href='/delete').info-delete delete the expenditure
+                    a(href='/update').info-update update the expenditure
+
+    

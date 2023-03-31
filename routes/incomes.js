@@ -23,17 +23,22 @@ router.post('/new_income',(req,res)=>{
     const formData = req.body
     Category = formData.category
     let icon = ""
+    let title = ""
     if(Category == 0){
         icon = "coins"
+        title = "Salary"
     }
     else if(Category == 1){
         icon = "piggy-bank"
+        title = "Savings"
     }
     else if (Category == 2){
         icon = "hand-holding-dollar"
+        title = "Loan"
     }
     else{
         icon = "circle-dollar-to-slot"
+        title = "Other Income"
     }
 
     fs.readFile('./data/balance.json',(err,data)=>{
@@ -53,7 +58,7 @@ router.post('/new_income',(req,res)=>{
         const income_info = JSON.parse(data)
         income_info.push({
             id:id(),
-            Category: formData.category.title,
+            Category: title,
             Amount: formData.amount,
             Details: formData.details,
             RegisterDate: formattedDate,

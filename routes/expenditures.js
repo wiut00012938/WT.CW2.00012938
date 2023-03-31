@@ -20,9 +20,8 @@ let categories = [
 ]
 
 router.get('/',(req,res)=>{
-    const error = req.query.error || false
     const success = req.query.success || false
-    res.render('allexpenditures',{error,success})
+    res.render('allexpenditures',{success})
 });
 
 router.get('/new_expenditure',(req,res)=>{
@@ -33,79 +32,93 @@ router.post('/new_expenditure',(req,res)=>{
     const formData = req.body
     Category = formData.category
     let icon = ""
+    let title = ""
     if(Category == 0){
         icon = "pump-soap"
+        title = 'Hygiene'
     }
     else if(Category == 1){
         icon = "utensils"
+        title = 'Food'
     }
     else if (Category == 2){
         icon = "house"
+        title = 'For Home'
     }
     else if (Category == 3){
         icon = "notes-medical"
+        title = 'Health'
     }
     else if (Category == 4){
         icon = "mag-saucer"
+        title = 'Cafee/Restaurant'
     }
     else if (Category == 5){
         icon = "car"
+        title = 'Car'
     }
     else if (Category == 6){
         icon = "shirt"
+        title = 'Clothes'
     }
     else if (Category == 7){
         icon = "dog"
+        title = 'Pets'
     }
     else if (Category == 8){
         icon = "gift"
+        title = 'Gifs'
     }
     else if (Category == 9){
         icon = "person-biking"
+        title = 'Hobbies'
     }
     else if (Category == 10){
         icon = "bus"
+        title = 'Transport'
     }
     else if (Category == 11){
         icon = "file-invoice-dollar"
+        title = 'Bills'
     }
     else{
         icon = "box-open"
+        title = 'Other expenditure'
     }
 
     fs.readFile('./data/balance.json',(err,data)=>{
         if(err) throw err
         const balance_value = JSON.parse(data)
-        if(parseFloat(balance_value[0].Balance < parseFloat(formData.amount))){
-            res.redirect('/all_expenditures?error=true')
+        if(parseFloat(balance_value[0].Balance) - parseFloat(formData.amount) < 0){
+            res.render('newexpense',{error:true,categories: categories})
         }
         else{
             balance_value[0].Balance = parseFloat(balance_value[0].Balance) - parseFloat(formData.amount)
             const updatedData = JSON.stringify(balance_value);
             fs.writeFileSync('./data/balance.json',updatedData);
+
+
+            fs.readFile('./data/expenditures.json',(err,data)=>{
+                if(err) throw err
+        
+                const formattedDate = new Date().toLocaleDateString('en-GB')
+                const expense_info = JSON.parse(data)
+                expense_info.push({
+                    id:id(),
+                    Category: title,
+                    Amount: formData.amount,
+                    Details: formData.details,
+                    RegisterDate: formattedDate,
+                    Icon: icon
+                })
+        
+                fs.writeFile('./data/expenditures.json',JSON.stringify(expense_info),err=>{
+                    if(err) throw err
+        
+                    res.redirect('/expenditures?success=true');
+                })
+            })
         }
-    })
-
-
-    fs.readFile('./data/expenditures.json',(err,data)=>{
-        if(err) throw err
-
-        const formattedDate = new Date().toLocaleDateString('en-GB')
-        const expense_info = JSON.parse(data)
-        expense_info.push({
-            id:id(),
-            Category: formData.category.title,
-            Amount: formData.amount,
-            Details: formData.details,
-            RegisterDate: formattedDate,
-            Icon: icon
-        })
-
-        fs.writeFile('./data/expenditures.json',JSON.stringify(expense_info),err=>{
-            if(err) throw err
-
-            res.redirect('/expenditures?success=true');
-        })
     })
 })
 
