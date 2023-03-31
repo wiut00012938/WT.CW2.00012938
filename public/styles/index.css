@@ -166,19 +166,19 @@ p.success{
 
 
 
-div.expenditure p, div.expenditure h1{
+div.expenditure p,div.income p{
     text-align: center;
     font-size: 3rem;
     color: rgb(63, 150, 231);
     margin: 2rem 0;
 }
-.expenditure .options{
+.expenditure .options, .income .options{
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-bottom: 3rem;
 }
-.expenditure .options a{
+.expenditure .options a, .income .options a{
     padding: 2rem;
     text-decoration: none;
     color: white;
@@ -195,13 +195,24 @@ div.expenditure p, div.expenditure h1{
     transform: scale(1.1);
 }
 .expenditure h1{
+    text-align: center;
+    font-size: 3rem;
+    color: tomato;
+    margin: 2rem 0;
     border-bottom: 1px solid tomato;
+}
+.income h1{
+    text-align: center;
+    font-size: 3rem;
+    color: rgb(63, 150, 231);
+    margin: 2rem 0;
+    border-bottom: 1px solid rgb(63, 150, 231);
 }
 
 div.wrapper{
-    border: 1px solid tomato;
+    border: 1px solid rgb(63, 150, 231);
     border-radius: 20px;
-    background-color: rgb(247, 93, 65, 0.4);
+    background-color: rgb(63, 150, 231, 0.4);
     margin-bottom: 3rem;
 }
 .wrapper h2{
@@ -213,7 +224,7 @@ div.wrapper{
     display: flex;
     align-items: center;
 }
-.expenditure-info{
+.expenditure-info, .income-info{
     margin-left: 1rem;
     width: 70%;
     display: flex;
@@ -221,19 +232,20 @@ div.wrapper{
     align-items: center;
     border-right: 1px solid white;
 }
-.expenditure-info div{
+.expenditure-info div,.income-info div{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
 }
-.expenditure-info div p{
+.expenditure-info div p,.income-info div p{
     color: black;
     font-size: 2rem;
 }
-.expenditure-info div i{
+.expenditure-info div i, .income-info div i{
     color: black;
-    font-size: 8rem;
+    font-size: 10rem;
+    margin-right: 2rem;
 }
 .info-controllers{
     width: 30%;
@@ -259,3 +271,4 @@ a.info-delete:hover, a.info-update:hover{
     cursor: pointer;
     transform: scale(1.1);
 }
+

@@ -35,11 +35,13 @@ app.get('/',(req,res)=>{
 app.post('/sign-up',
 body('name')
 .isLength({min:1,max:15}).withMessage('Name has to be filled and be between 1-15 characters')
-/*.matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.')*/
+.matches(/^[A-Za-z\s]+$/).withMessage('Name must be alphabetic.')
+.custom(value => !/\s/.test(value)).withMessage("Enter only Name without any spacing")
 ,
 body('surname')
 .isLength({min:1,max:15}).withMessage('Surname has to be filled and be between 1-15 characters')
-/*.matches(/^[A-Za-z\s]+$/).withMessage('Surname must be alphabetic.')*/
+.matches(/^[A-Za-z\s]+$/).withMessage('Surname must be alphabetic.')
+.custom(value => !/\s/.test(value)).withMessage("Enter only a Surname wihout any spacing")
 ,
 body('email')
 .isLength({min:1,max:30})
@@ -49,14 +51,16 @@ body('email')
 ,
 body('limit')
 .isLength({min:1,max:15})
-.withMessage('limit must to filled'),
+.withMessage('limit must to filled')
+.custom(value => value != 0)
+.withMessage("Expenditure can not be equal to zero")
+,
 
 (req,res)=>{
     let errors = validationResult(req)
     if (!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()})
     }else{
-        //res.json({status:'OK'})
         const formData = req.body
         fs.readFile('./data/account.json',(err,data)=>{
             if(err) throw err
@@ -75,7 +79,6 @@ body('limit')
             fs.writeFile('./data/account.json',JSON.stringify(account_info),err=>{
                 if(err) throw err
 
-                //res.redirect('/?success=true');
                 res.json({ success: true });
             })
         })
