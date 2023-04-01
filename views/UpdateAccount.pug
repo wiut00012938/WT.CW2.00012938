@@ -17,7 +17,7 @@ block content
             
             label Desired limit of expenduture per month in $
             span#limit-error
-            input#limit.input(type="number", name ="limit" value = `${account.Limit}`)
+            input#limit.input(type="number",step = 0.01, name ="limit" value = `${account.Limit}`)
 
             button.input Submit  
     script(src="/static/javascripts/update.js" defer) 
