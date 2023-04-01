@@ -242,6 +242,9 @@ router.post('/:id/update',(req,res)=>{
             const balance_value = JSON.parse(data)
             const filteredExpenditures = expense_info.filter(expenditure => expenditure.id === id)[0]
             balance_value[0].Balance = parseFloat(balance_value[0].Balance) + parseFloat(previous_amount) - filteredExpenditures.Amount
+            if(balance_value[0].Balance < 0){
+                balance_value[0].Balance = 0
+            }
             const result = balance_value[0]
             const updatedData = JSON.stringify(balance_value)
             fs.writeFile('./data/balance.json',updatedData, (err)=>{

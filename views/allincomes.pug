@@ -3,25 +3,31 @@ extends layout.pug
 block content
     if success
             p.success New Income is added!
-    
+    if deleted
+            p.success Income is deleted!
+    if updated 
+            p.success Income is updated!
     div.income
         p Current Balance : $#{balance_value.Balance}
         .options
             a(href='/expenditures/new_expenditure')#new-expense Add a new expense
             a(href='/incomes/new_income')#new-income Add a new income
-        h1 All Expenditures
+        h1 All Incomes
         .reverse-turner
-            each income in incomes
-                .wrapper
-                    h2 #{income.Category}
-                    div
-                        .income-info
-                            div
-                                p Created Date: #{income.RegisterDate}
-                                p Amount: $#{income.Amount}
-                                p Details: #{income.Details}
-                            div
-                                i.fa-solid(class=`fa-${income.Icon}`)
-                        .info-controllers
-                            a(href='/delete').info-delete delete the expenditure
-                            a(href='/update').info-update update the expenditure
+            if incomes.length
+                each income in incomes
+                    .wrapper
+                        h2 #{income.Category}
+                        div
+                            .income-info
+                                div
+                                    p Created Date: #{income.RegisterDate}
+                                    p Amount: $#{income.Amount}
+                                    p Details: #{income.Details}
+                                div
+                                    i.fa-solid(class=`fa-${income.Icon}`)
+                            .info-controllers
+                                a(href=`/incomes/${income.id}/delete`).info-delete delete the expenditure
+                                a(href=`/incomes/${income.id}/update`).info-update update the expenditure
+            else
+                p.empty No added incomes

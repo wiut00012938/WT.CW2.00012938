@@ -82,6 +82,113 @@ router.post('/new_income',(req,res)=>{
     })
 })
 
+router.get('/:id/delete',(req,res)=>{
+    const id = req.params.id
+    fs.readFile('./data/incomes.json',(err,data)=>{
+        if(err) throw err
+    
+        const incomes = JSON.parse(data)
+        const filteredIncomes = incomes.filter(expenditure => expenditure.id != id)
+        const exactIncome = incomes.filter(expenditure=> expenditure.id === id)[0]
+
+        fs.writeFile('./data/incomes.json',JSON.stringify(filteredIncomes), (err) =>{
+            if(err) throw err
+        })
+        fs.readFile('./data/balance.json',(err,data)=>{let icon = ""
+        let title = ""
+        if(Category == 0){
+            icon = "coins"
+            title = "Salary"
+        }
+        else if(Category == 1){
+            icon = "piggy-bank"
+            title = "Savings"
+        }
+        else if (Category == 2){
+            icon = "hand-holding-dollar"
+            title = "Loan"
+        }
+        else{
+            icon = "circle-dollar-to-slot"
+            title = "Other Income"
+        }
+            if(err) throw err
+            const balance_value = JSON.parse(data)
+            balance_value[0].Balance = parseFloat(balance_value[0].Balance) - parseFloat(exactIncome.Amount)
+            if(balance_value[0].Balance < 0){
+                balance_value[0].Balance = 0
+            }
+            const updatedData = JSON.stringify(balance_value)
+            const result = balance_value[0]
+            fs.writeFile('./data/balance.json',updatedData, (err)=>{
+                if(err) throw err
+                res.render('allincomes',{incomes:filteredIncomes,deleted:true,balance_value:result})
+            })
+        })
+    })
+})
+
+router.get('/:id/update',(req,res)=>{
+    const id = req.params.id
+    fs.readFile('./data/incomes.json',(err,data)=>{
+        if(err) throw err
+        const incomes = JSON.parse(data)
+        const filteredIncomes = incomes.filter(expenditure => expenditure.id === id)[0]
+        res.render('UpdateIncome',{incomes:filteredIncomes,id:id,categories:categories})
+    })
+})
+
+router.post('/:id/update',(req,res)=>{
+    const formData = req.body
+    const id = req.params.id
+    Category = formData.category
+    let icon = ""
+    let title = ""
+    if(Category == 0){
+        icon = "coins"
+        title = "Salary"
+    }
+    else if(Category == 1){
+        icon = "piggy-bank"
+        title = "Savings"
+    }
+    else if (Category == 2){
+        icon = "hand-holding-dollar"
+        title = "Loan"
+    }
+    else{
+        icon = "circle-dollar-to-slot"
+        title = "Other Income"
+    }
+    fs.readFile('./data/incomes.json',(err,data)=>{
+        if(err) throw err
+        const income_info = JSON.parse(data)
+        const index = income_info.findIndex((item) => item.id === id);
+        const previous_amount = income_info[index].Amount
+        income_info[index].Category = title
+        income_info[index].Amount = formData.amount
+        income_info[index].Details = formData.details
+        income_info[index].Icon = icon
+        fs.writeFile('./data/incomes.json',JSON.stringify(income_info), (err)=>{
+            if(err) throw err
+        })
+        fs.readFile('./data/balance.json',(err,data)=>{
+            if(err) throw err
+            const balance_value = JSON.parse(data)
+            const filteredIncomes = income_info.filter(income => income.id === id)[0]
+            balance_value[0].Balance = parseFloat(balance_value[0].Balance) - parseFloat(previous_amount) + parseFloat(filteredIncomes.Amount)
+            if(balance_value[0].Balance < 0){
+                balance_value[0].Balance = 0
+            }
+            const result = balance_value[0]
+            const updatedData = JSON.stringify(balance_value)
+            fs.writeFile('./data/balance.json',updatedData, (err)=>{
+                if(err) throw err
+                res.render('allincomes',{incomes:income_info,updated:true,balance_value:result})
+            })
+        })
+    })
+})
 
 module.exports = router;
 

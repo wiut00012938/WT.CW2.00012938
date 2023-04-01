@@ -1,0 +1,24 @@
+extends layout.pug 
+
+block content 
+    div.new-income-form
+        h1 Add a new income
+        form(action=`/incomes/${id}/update`, method="POST")
+            label Category
+            span#category-error
+            if categories
+                select.input(name = "category")
+                    each category in categories
+                        if category.title === `${incomes.Category}`
+                            option.input(value=category.value, selected="selected")= category.title
+                        else
+                            option.input(value=category.value)= category.title
+            
+            label Amount($)
+            span#amount-error
+            input#limit.input(type="number", name ="amount" value = `${incomes.Amount}`)
+
+            label Details
+            textarea.input(name="details", cols="30", rows="10") #{incomes.Details}
+
+            button.input Submit  
