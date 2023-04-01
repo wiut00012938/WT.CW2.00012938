@@ -1,0 +1,26 @@
+extends layout.pug 
+
+block content 
+    if error
+        p.error expenditure amount can not be less then your balance. Please recheck the amount of expenditure or add an income if you had one
+    div.new-expense-form
+        h1 Add a new spending
+        form#form.form(action=`/expenditures/${id}/update`, method="POST")
+            label Category
+            span#category-error
+            if categories
+                select.input(name = "category")
+                    each category in categories
+                        if category.title === `${expenditures.Category}`
+                            option.input(value=category.value, selected="selected")= category.title
+                        else
+                            option.input(value=category.value)= category.title
+
+            label Amount($)
+            span#amount-error
+            input#limit.input(type="number", name ="amount" value = `${expenditures.Amount}`)
+
+            label Details
+            textarea.input(name="details", cols="30", rows="10") #{expenditures.Details}
+
+            button.input Submit  

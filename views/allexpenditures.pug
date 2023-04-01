@@ -3,6 +3,10 @@ extends layout.pug
 block content
     if success
             p.success New Expenditure is added!
+    if deleted
+            p.success Expenditure is deleted!
+    if updated 
+            p.success Expenditure is updated!
     div.expenditure
         p Current Balance : $#{balance_value.Balance}
         .options
@@ -10,19 +14,22 @@ block content
             a(href='/incomes/new_income')#new-income Add a new income
         h1 All Expenditures
         .reverse-turner
-            each expenditure in expenditures
-                .wrapper
-                    h2 #{expenditure.Category}
-                    div
-                        .expenditure-info
-                            div
-                                p Created Date: #{expenditure.RegisterDate}
-                                p Amount: $#{expenditure.Amount}
-                                p Details: #{expenditure.Details}
-                            div
-                                i.fa-solid(class=`fa-${expenditure.Icon}`)
-                        .info-controllers
-                            a(href='/delete').info-delete delete the expenditure
-                            a(href='/update').info-update update the expenditure
+            if expenditures.length
+                each expenditure in expenditures
+                    .wrapper
+                        h2 #{expenditure.Category}
+                        div
+                            .expenditure-info
+                                div
+                                    p Created Date: #{expenditure.RegisterDate}
+                                    p Amount: $#{expenditure.Amount}
+                                    p Details: #{expenditure.Details}
+                                div
+                                    i.fa-solid(class=`fa-${expenditure.Icon}`)
+                            .info-controllers
+                                a(href=`/expenditures/${expenditure.id}/delete`).info-delete delete the expenditure
+                                a(href=`/expenditures/${expenditure.id}/update`).info-update update the expenditure
+            else 
+                p.empty No added expenditures
 
     

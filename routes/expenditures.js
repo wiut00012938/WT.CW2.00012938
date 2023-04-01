@@ -2,6 +2,7 @@ const fs = require('fs')
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const { fileURLToPath } = require('url');
 router.use(bodyParser.urlencoded({ extended: true }));
 let categories = [
     {value:0, title:'Hygiene'},
@@ -130,6 +131,127 @@ router.post('/new_expenditure',(req,res)=>{
         }
     })
 })
+
+
+router.get('/:id/delete',(req,res)=>{
+    const id = req.params.id
+    fs.readFile('./data/expenditures.json',(err,data)=>{
+        if(err) throw err
+    
+        const expenditures = JSON.parse(data)
+        const filteredExpenditures = expenditures.filter(expenditure => expenditure.id != id)
+        const exactExpenditure = expenditures.filter(expenditure=> expenditure.id === id)[0]
+
+        fs.writeFile('./data/expenditures.json',JSON.stringify(filteredExpenditures), (err) =>{
+            if(err) throw err
+        })
+        fs.readFile('./data/balance.json',(err,data)=>{
+            if(err) throw err
+            const balance_value = JSON.parse(data)
+            balance_value[0].Balance = parseFloat(balance_value[0].Balance) + parseFloat(exactExpenditure.Amount)
+            const updatedData = JSON.stringify(balance_value)
+            const result = balance_value[0]
+            fs.writeFile('./data/balance.json',updatedData, (err)=>{
+                if(err) throw err
+                res.render('allexpenditures',{expenditures:filteredExpenditures,deleted:true,balance_value:result})
+            })
+        })
+    })
+})
+
+router.get('/:id/update',(req,res)=>{
+    const id = req.params.id
+    fs.readFile('./data/expenditures.json',(err,data)=>{
+        const expenditures = JSON.parse(data)
+        const filteredExpenditures = expenditures.filter(expenditure => expenditure.id === id)[0]
+        res.render('UpdateExpense',{expenditures:filteredExpenditures,id:id,categories:categories})
+    })
+})
+router.post('/:id/update',(req,res)=>{
+    const formData = req.body
+    const id = req.params.id
+    Category = formData.category
+    let icon = ""
+    let title = ""
+    if(Category == 0){
+        icon = "pump-soap"
+        title = 'Hygiene'
+    }
+    else if(Category == 1){
+        icon = "utensils"
+        title = 'Food'
+    }
+    else if (Category == 2){
+        icon = "house"
+        title = 'For Home'
+    }
+    else if (Category == 3){
+        icon = "notes-medical"
+        title = 'Health'
+    }
+    else if (Category == 4){
+        icon = "mag-saucer"
+        title = 'Cafee/Restaurant'
+    }
+    else if (Category == 5){
+        icon = "car"
+        title = 'Car'
+    }
+    else if (Category == 6){
+        icon = "shirt"
+        title = 'Clothes'
+    }
+    else if (Category == 7){
+        icon = "dog"
+        title = 'Pets'
+    }
+    else if (Category == 8){
+        icon = "gift"
+        title = 'Gifs'
+    }
+    else if (Category == 9){
+        icon = "person-biking"
+        title = 'Hobbies'
+    }
+    else if (Category == 10){
+        icon = "bus"
+        title = 'Transport'
+    }
+    else if (Category == 11){
+        icon = "file-invoice-dollar"
+        title = 'Bills'
+    }
+    else{
+        icon = "box-open"
+        title = 'Other expenditure'
+    }
+    fs.readFile('./data/expenditures.json',(err,data)=>{
+        if(err) throw err
+        const expense_info = JSON.parse(data)
+        const index = expense_info.findIndex((item) => item.id === id);
+        const previous_amount = expense_info[index].Amount
+        expense_info[index].Category = title
+        expense_info[index].Amount = formData.amount
+        expense_info[index].Details = formData.details
+        expense_info[index].Icon = icon
+        fs.writeFile('./data/expenditures.json',JSON.stringify(expense_info), (err)=>{
+            if(err) throw err
+        })
+        fs.readFile('./data/balance.json',(err,data)=>{
+            if(err) throw err
+            const balance_value = JSON.parse(data)
+            const filteredExpenditures = expense_info.filter(expenditure => expenditure.id === id)[0]
+            balance_value[0].Balance = parseFloat(balance_value[0].Balance) + parseFloat(previous_amount) - filteredExpenditures.Amount
+            const result = balance_value[0]
+            const updatedData = JSON.stringify(balance_value)
+            fs.writeFile('./data/balance.json',updatedData, (err)=>{
+                if(err) throw err
+                res.render('allexpenditures',{expenditures:expense_info,updated:true,balance_value:result})
+            })
+        })
+    })
+})
+
 
 function id() {
     return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase()
