@@ -20,7 +20,6 @@ app.use('/account',account)
 //app.use(express.urlencoded({extended: false}))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
-
 app.get('/',(req,res)=>{
     fs.readFile('./data/account.json',(err,data)=>{
         if(err) throw err
@@ -34,6 +33,39 @@ app.get('/',(req,res)=>{
             fs.readFile('./data/expenditures.json',(err,data)=>{
                 if(err) throw err
                 const expenditures = JSON.parse(data)
+
+                const dateTotals = {};
+                for (const item of expenditures) {
+                const dateParts = item.RegisterDate.split('/');
+                const date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]); // year, month (0-indexed), day
+                const dateString = date.toISOString().substring(0, 10);
+                if (dateString in dateTotals) {
+                    dateTotals[dateString] += parseInt(item.Amount);
+                } else {
+                    dateTotals[dateString] = parseInt(item.Amount);
+                }
+                }
+                const today = new Date();
+                const last7Days = [];
+                for (let i = 1; i < 8; i++) { // start from yesterday's date
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                const dateString = date.toISOString().substring(0, 10);
+                last7Days.push(dateString);
+                }
+                last7Days.reverse();
+
+                const totalAmounts = [];
+                for (const day of last7Days) {
+                if (day in dateTotals) {
+                    totalAmounts.push(dateTotals[day]);
+                } else {
+                    totalAmounts.push(0);
+                }
+                }
+
+
+
                 let lastExpenditure = null
                 if(Object.keys(expenditures).length == 0){
                     lastExpenditure = expenditures
@@ -54,7 +86,7 @@ app.get('/',(req,res)=>{
                     fs.readFile('./data/balance.json',(err,data)=>{
                         if(err) throw err
                         balance_value = JSON.parse(data)[0]
-                        res.render('index',{account:account,expenditures:expenditures,lastExpenditure:lastExpenditure,lastIncome:lastIncome,incomes:incomes,balance:balance_value})
+                        res.render('index',{account:account,expenditures:expenditures,lastExpenditure:lastExpenditure,lastIncome:lastIncome,incomes:incomes,balance:balance_value,last7Days: last7Days,totalAmounts:totalAmounts})
                     })
                 })
             })

@@ -302,3 +302,7 @@ a.info-delete:hover, a.info-update:hover{
     margin: 2rem 0;
     text-align: center;
 }
+
+.value-hidden{
+    display: hidden;
+}
