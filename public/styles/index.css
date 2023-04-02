@@ -166,19 +166,32 @@ p.success{
 
 
 
-div.expenditure p,div.income p{
+div.expenditure p,div.income p, div.home-page p, div.home-page h2{
     text-align: center;
     font-size: 3rem;
     color: rgb(63, 150, 231);
     margin: 2rem 0;
 }
-.expenditure .options, .income .options{
+div.home-page h1{
+    text-align: left;
+    font-size: 4rem;
+    color: rgb(63, 150, 231);
+    margin: 2rem 0 4rem 2rem;
+}
+div.last-expenditure h2, div.last-income h2{
+    text-align: left;
+    font-size: 3rem;
+    color: tomato;
+    border-bottom: 1px solid tomato;
+    margin: 4rem 0;
+}
+.expenditure .options, .income .options, .home-page .options{
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-bottom: 3rem;
 }
-.expenditure .options a, .income .options a{
+.expenditure .options a, .income .options a, .home-page .options a{
     padding: 2rem;
     text-decoration: none;
     color: white;
@@ -213,16 +226,23 @@ div.expenditure p,div.income p{
     flex-direction: column-reverse;
     justify-content: center;
 }
-div.wrapper{
+.income div.wrapper, .last-income div.wrapper{
     border: 1px solid rgb(63, 150, 231);
     border-radius: 20px;
     background-color: rgb(63, 150, 231, 0.4);
     margin-bottom: 3rem;
 }
-.wrapper h2{
+.expenditure div.wrapper, .last-expenditure div.wrapper{
+    border: 1px solid tomato;
+    border-radius: 20px;
+    background-color: rgb(245, 96, 70,0.4);
+    margin-bottom: 3rem;
+}
+.wrapper h2, .last-expenditure .wrapper h2, .last-income .wrapper h2{
     font-size: 3rem;
     color: black;
     text-align: center;
+    border: none;
 }
 .wrapper div{
     display: flex;

@@ -2,6 +2,7 @@ let fs = require('fs')
 const express = require('express');
 const app = express();
 const path = require('path');
+const bodyParser = require('body-parser');
 let PORT = process.env.PORT || 5000;
 const { body, validationResult } = require('express-validator');
 
@@ -16,7 +17,8 @@ app.use('/static', express.static(path.join(__dirname,'public')));
 app.use('/expenditures',expenditures);
 app.use('/incomes',incomes);
 app.use('/account',account)
-app.use(express.urlencoded({extended: false}))
+//app.use(express.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 
 app.get('/',(req,res)=>{
@@ -24,11 +26,38 @@ app.get('/',(req,res)=>{
         if(err) throw err
 
         const accounts = JSON.parse(data)
+        const account = accounts[0]
         if(Object.keys(accounts).length == 0){
             res.render('signup.pug',{})
         }
         else{
-            res.render('index.pug')
+            fs.readFile('./data/expenditures.json',(err,data)=>{
+                if(err) throw err
+                const expenditures = JSON.parse(data)
+                let lastExpenditure = null
+                if(Object.keys(expenditures).length == 0){
+                    lastExpenditure = expenditures
+                }
+                else{
+                    lastExpenditure = expenditures[Object.keys(expenditures).length -1]
+                }
+                fs.readFile('./data/incomes.json',(err,data)=>{
+                    if(err) throw err
+                    const incomes = JSON.parse(data)
+                    let lastIncome = null
+                    if(Object.keys(incomes).length == 0){
+                        lastIncome = incomes
+                    }
+                    else{
+                        lastIncome = incomes[Object.keys(incomes).length -1]
+                    }
+                    fs.readFile('./data/balance.json',(err,data)=>{
+                        if(err) throw err
+                        balance_value = JSON.parse(data)[0]
+                        res.render('index',{account:account,expenditures:expenditures,lastExpenditure:lastExpenditure,lastIncome:lastIncome,incomes:incomes,balance:balance_value})
+                    })
+                })
+            })
         }
     })
 })
