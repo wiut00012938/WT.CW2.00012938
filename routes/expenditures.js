@@ -114,8 +114,10 @@ body('amount')
         fs.readFile('./data/balance.json',(err,data)=>{
             if(err) throw err
             const balance_value = JSON.parse(data)
+            console.log(balance_value[0].Balance)
             if(parseFloat(balance_value[0].Balance) - parseFloat(formData.amount) < 0){
-                res.render('newexpense',{error:true,categories: categories})
+                res.json({ error: true });
+                console.log("You balance is less than the amount of expenditure.")
             }
             else{
                 balance_value[0].Balance = parseFloat(balance_value[0].Balance) - parseFloat(formData.amount)
