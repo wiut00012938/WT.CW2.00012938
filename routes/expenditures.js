@@ -29,8 +29,8 @@ router.get('/',(req,res)=>{
         if(err) throw err
 
         const expenditures = JSON.parse(data)
-        const success = req.query.success || false
-        const updated = req.query.updated || false
+        const success = Boolean(req.query.success);
+        const updated = Boolean(req.query.updated);
         fs.readFile('./data/balance.json',(err,data)=>{
             if(err) throw err
             balance_value = JSON.parse(data)[0]
