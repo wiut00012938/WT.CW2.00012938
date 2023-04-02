@@ -4,12 +4,13 @@ block content
     if error
         p.error expenditure amount can not be less then your balance. Please recheck the amount of expenditure or add an income if you had one
     div.new-expense-form
-        h1 Add a new spending
+        h1 update a spending info
+        h1#id #{id}
         form#form.form(action=`/expenditures/${id}/update`, method="POST")
             label Category
             span#category-error
             if categories
-                select.input(name = "category")
+                select#category.input(name = "category")
                     each category in categories
                         if category.title === `${expenditures.Category}`
                             option.input(value=category.value, selected="selected")= category.title
@@ -18,9 +19,10 @@ block content
 
             label Amount($)
             span#amount-error
-            input#limit.input(type="number", name ="amount",step = 0.01, value = `${expenditures.Amount}`)
+            input#amount.input(type="number", name ="amount",step = 0.01, value = `${expenditures.Amount}`)
 
             label Details
-            textarea.input(name="details", cols="30", rows="10") #{expenditures.Details}
+            textarea#details.input(name="details", cols="30", rows="10") #{expenditures.Details}
 
             button.input Submit  
+    script(src="/static/javascripts/updateexpenditure.js" defer) 

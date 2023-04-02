@@ -154,7 +154,7 @@ p.success{
   option{
     font-size: 2rem;
   }
-#name-error , #surname-error, #email-error, #limit-error,p.error{
+#name-error , #surname-error, #email-error, #limit-error,p.error, #amount-error{
     text-align: center;
     font-size: 2rem;
     color: red;

@@ -3,19 +3,19 @@ extends layout.pug
 block content 
     div.new-income-form
         h1 Add a new income
-        form(action="/incomes/new_income", method="POST")
+        form#form.form(action="/incomes/new_income", method="POST")
             label Category
-            span#category-error
             if categories
-                select.input(name="category")
+                select#category.input(name="category")
                     each category in categories
                         option.input(value = category.value)= category.title
             
             label Amount($)
             span#amount-error
-            input#limit.input(type="number",step = 0.01, name ="amount")
+            input#amount.input(type="number",step = 0.01, name ="amount")
 
             label Details
-            textarea.input(name="details", cols="30", rows="10") 
+            textarea#details.input(name="details", cols="30", rows="10") 
 
             button.input Submit  
+    script(src="/static/javascripts/newincome.js" defer) 

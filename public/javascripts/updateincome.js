@@ -1,38 +1,27 @@
 let form = document.getElementById('form')
-
-let NameError = get('name-error')
-let SurnameError = get('surname-error')
-let EmailError = get('email-error')
-let LimitError = get('limit-error')
+let Id = get('id').textContent
+let AmountError = get('amount-error')
+console.log(Id)
 
 form.addEventListener('submit', e => {
     e.preventDefault()
 
-    fetch('/account/update',{
+    fetch(`/incomes/${Id}/update`,{
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
         },
         body:JSON.stringify({
-            name: getValue('name'),
-            surname: getValue('surname'),
-            email:getValue('email'),
-            limit: getValue('limit')
+            id: get('id').textContent,
+            amount: getValue('amount'),
+            category: getValue('category'),
+            details: getValue('details'),
         })
     })
     .then(res=> res.json())
     .then(data=>{
-        NameError.textContent = ''
-        get('name').classList.remove('error')
-
-        SurnameError.textContent = ''
-        get('surname').classList.remove('error')
-
-        EmailError.textContent = ''
-        get('email').classList.remove('error')
-
-        LimitError.textContent = ''
-        get('limit').classList.remove('error')
+        AmountError.textContent = ''
+        get('amount').classList.remove('error')
         if(data.errors != null){
             data.errors.forEach(error =>{
                 get(`${error.param}-error`).textContent = `${error.msg} | you entered ${error.value ? error.value: 'nothing'}`
@@ -40,7 +29,7 @@ form.addEventListener('submit', e => {
         })
     }
     else{
-        window.location.href = '/account';
+        window.location.href = '/incomes?updated=true';
     }
     })
 })
