@@ -4,7 +4,7 @@
   "description": "Repository for coursework project 2 of Web Technology module. Student ID: 00012938",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

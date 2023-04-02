@@ -25,5 +25,10 @@ node app
 - pug.js
 - express-validator.js
 
+### external Dependencies of Web application
+- fonts Awesome
+- Google Fonts
+- ChartJs
+
 ### Web application repository on github
 [link to the github repository](https://github.com/wiut00012938/WT.CW2.00012938.git)
